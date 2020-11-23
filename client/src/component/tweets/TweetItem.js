@@ -84,7 +84,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#12cad619"
   },
   paper: {
-    maringTop: 10,
+    marginTop: 40,
     marginBottom: 10,
     width: "100%",
     maxWidth: "100%",
@@ -112,25 +112,40 @@ const TweetItem = ({ tweet }) => {
   const loading = useSelector((state) => state.tweet.loading);
   const authLoading = useSelector((state) => state.auth.loading);
   const auth = useSelector((state) => state.auth.user);
+  // const authId = useSelector((state) => state.auth.user._id);
   const { isAuthenticated } = useSelector((state) => state.auth);
   const comments = tweet.comments;
   const user = tweet.owner;
 
-  const [liked, setLiked] = useState(!!tweet.likes.length);
+  const [liked, setLiked] = useState(false);
+  // let liked = false;
   const [retweet, setRetweet] = useState(!!tweet.retweets.length);
   const [comment, setComment] = useState(false);
   const [commentToggle, setCommentToggle] = useState(false);
   const [title, setTitle] = useState("Edit");
 
-  const setLike = (id) => {
-    let likes = tweet.likes.map((like) => like._id === id);
-    console.log(tweet.likes.map((like) => like._id === id, likes));
+  // let highlightLikeIcon = null;
+  // highlightLikeIcon = tweet.likes.map((like) => like.owner === authId);
+  // console.log(highlightLikeIcon !== 0);
+  // if (highlightLikeIcon !== 0) setLiked(true);
+
+  // const highlightLikeIcon = () => {
+  //   let likes = tweet.likes.map((like) => like.owner === authId);
+  //   if (likes.length === 0) {
+  //     setLiked(true);
+  //   } else setLiked(false);
+  // };
+
+  const setLike = () => {
+    let likes = tweet.likes.map((like) => like.owner === auth._Id);
+
+    // console.log(tweet.likes.map((like) => like._id === id, likes));
     if (likes.length === 0 && !liked) {
-      setLiked(true);
-      dispatch(addLike(id));
-    } else if (liked && likes.length > 0) {
-      setLiked(false);
-      dispatch(removeLike(id));
+      // setLiked(true);
+      dispatch(addLike(tweet._id));
+    } else if (likes.length > 0) {
+      // setLiked(false);
+      dispatch(removeLike(tweet._id));
     }
   };
 
@@ -151,7 +166,7 @@ const TweetItem = ({ tweet }) => {
     commentToggle ? setCommentToggle(false) : setCommentToggle(true);
   };
 
-  if (auth !== null) console.log(auth.username);
+  // if (auth !== null) console.log(auth.username);
   // console.log(user.username);
 
   return (
@@ -239,7 +254,7 @@ const TweetItem = ({ tweet }) => {
                     <IconButton
                       aria-label='like'
                       className={classes.like}
-                      onClick={() => setLike(tweet._id)}>
+                      onClick={setLike}>
                       {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                     </IconButton>
                     {tweet.likes.length > 0 ? (
