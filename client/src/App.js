@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 // Routes
 import PrivateRoute from "./component/routing/PrivateRoute";
 
-// Components
+// Micro Blogging Components
 import Navbar from "./component/layout/Navbar";
 import Drawer from "./component/layout/Drawer";
 import Landing from "./component/layout/Landing";
@@ -18,6 +18,9 @@ import Profile from "./component/profile/Profile";
 import Followers from "./component/Profiles/Followers";
 import Following from "./component/Profiles/Following";
 import Setting from "./component/profile/Setting";
+
+// Social Media Components
+import SocialDashboard from "./component/socialmedia/dashboard/SocialDashboard";
 
 // Redux
 import store from "./Redux/store";
@@ -34,8 +37,8 @@ if (localStorage.token) {
 function App() {
   useEffect(() => {
     store.dispatch(loadUser());
-    store.dispatch(getAllTweets());
-    store.dispatch(getTweetsByMe());
+    // store.dispatch(getAllTweets());
+    // store.dispatch(getTweetsByMe());
   }, []);
 
   // console.log(moment(moment() + 36e5 * 5).twitter());
@@ -56,6 +59,11 @@ function App() {
             <PrivateRoute exact path='/profile/:id' component={Profile} />
             <PrivateRoute exact path='/profiles' component={Profiles} />
             <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            <PrivateRoute
+              exact
+              path='/dashboard/social'
+              component={SocialDashboard}
+            />
             <PrivateRoute exact path='/followers' component={Followers} />
             <PrivateRoute exact path='/following' component={Following} />
             <PrivateRoute exact path='/setting' component={Setting} />
