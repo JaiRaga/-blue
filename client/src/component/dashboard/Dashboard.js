@@ -28,6 +28,7 @@ const Dashboard = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    // dispatch(getAllTweets());
     dispatch(getAllTweets());
     dispatch(getFollowers());
     dispatch(getFollowing());
@@ -40,7 +41,7 @@ const Dashboard = () => {
 
   return (
     <Grid container justify='center' alignItems='center' style={style.Margin}>
-      <Grid container direction='column' spacing={2} item xs={12} sm={8} md={5}>
+      <Grid container direction='column' spacing={2} item xs={12} sm={7} md={4}>
         <Tweet />
         {loading || !tweets.length ? (
           <Fragment>
