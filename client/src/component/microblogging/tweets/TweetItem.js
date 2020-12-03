@@ -8,6 +8,7 @@ import {
   Paper,
   Typography,
   Button,
+  TextField,
   Tooltip
 } from "@material-ui/core";
 import FavoriteIcon from "@material-ui/icons/Favorite";
@@ -169,7 +170,7 @@ const TweetItem = ({ tweet }) => {
 
   return (
     <Fragment>
-      <Paper elevation={9} className={classes.paper}>
+      <Paper elevation={3} className={classes.paper}>
         {loading || user === null ? (
           <Grid
             container
@@ -204,8 +205,7 @@ const TweetItem = ({ tweet }) => {
                     </Grid>
                     <Grid item className={classes.marginTop}>
                       <Typography variant='body1' className={classes.handle}>
-                        <span>@</span>
-                        {user.handle}
+                        @{user.handle}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -233,7 +233,7 @@ const TweetItem = ({ tweet }) => {
                         <IconButton
                           aria-label='edit'
                           className={classes.edit}
-                          onClick={() => setEdit(true)}>
+                          onClick={() => setEdit((prev) => !prev)}>
                           <EditIcon />
                         </IconButton>
                         <IconButton
@@ -248,7 +248,23 @@ const TweetItem = ({ tweet }) => {
                 </Grid>
                 <Divider />
                 <Grid item className={classes.tweet}>
-                  {tweet.text}
+                  {!edit ? (
+                    tweet.text
+                  ) : (
+                    <Grid container item direction='column'>
+                      <TextField
+                        id='filled-basic'
+                        label='Edit Tweet'
+                        name='text'
+                        value={text}
+                        variant='filled'
+                        onChange={onChange}
+                      />
+                      <Button color='secondary' onClick={updateTweet}>
+                        Update Tweet
+                      </Button>
+                    </Grid>
+                  )}
                 </Grid>
                 <Grid
                   container
@@ -259,7 +275,7 @@ const TweetItem = ({ tweet }) => {
                     <IconButton
                       aria-label='like'
                       className={classes.like}
-                      onClick={setLike}>
+                      onClick={() => setLike(tweet._id)}>
                       {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
                     </IconButton>
                     {tweet.likes.length > 0 ? (
