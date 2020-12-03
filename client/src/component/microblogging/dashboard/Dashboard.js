@@ -29,6 +29,8 @@ const Dashboard = () => {
 
   useEffect(() => {
     // dispatch(getAllTweets());
+    // if (tweet.tweets.length === 0) dispatch(getAllTweets());
+    dispatch(getAllTweets());
     dispatch(getAllTweets());
     dispatch(getFollowers());
     dispatch(getFollowing());
