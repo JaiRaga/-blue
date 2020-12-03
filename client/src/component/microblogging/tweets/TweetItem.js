@@ -14,6 +14,7 @@ import {
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import RepeatIcon from "@material-ui/icons/Repeat";
+import ColorLensIcon from "@material-ui/icons/ColorLens";
 import RepeatOneIcon from "@material-ui/icons/RepeatOne";
 import CommentIcon from "@material-ui/icons/Comment";
 import AddCommentIcon from "@material-ui/icons/AddComment";
@@ -105,6 +106,14 @@ const useStyles = makeStyles((theme) => ({
   },
   commentDisplay: {
     marginBottom: 15
+  },
+  light: {
+    color: "#1976d2",
+    backgroundColor: "#1976d211"
+  },
+  dark: {
+    color: "#1976d2",
+    backgroundColor: "#1976d288"
   }
 }));
 
@@ -121,11 +130,52 @@ const TweetItem = ({ tweet }) => {
   const user = tweet.owner;
 
   const [text, setText] = useState(tweet.text);
-  const [liked, setLiked] = useState(!!tweet.likes.length);
+  const [liked, setLiked] = useState(false);
   const [retweet, setRetweet] = useState(!!tweet.retweets.length);
   const [comment, setComment] = useState(false);
   const [commentToggle, setCommentToggle] = useState(false);
   const [edit, setEdit] = useState(false);
+
+  let highlightIcon = false,
+    highlightLikeIcon = false,
+    highlightShareIcon = false,
+    highlightCommentIcon = false;
+
+  const highlightIcons = () => {
+    // console.log("UserId:", auth._id);
+    // console.log("Tweet:", tweet.owner._id);
+    // console.log("Equality:", auth._id === tweet.owner._id);
+
+    return auth._id === tweet.owner._id ? (highlightIcon = true) : null;
+  };
+
+  highlightIcons();
+
+  console.log("highlightIcon:", highlightIcon);
+
+  const highlightLikeIcons = () => {
+    // console.log("Like:", tweet.likes);
+
+    tweet.likes.forEach((like) =>
+      like.owner === auth._id ? (highlightLikeIcon = true) : null
+    );
+
+    // console.log("highlightLikeIcon", highlightLikeIcon);
+  };
+
+  highlightLikeIcons();
+
+  const highlightShareIcons = () => {
+    tweet.retweets.forEach((retweet) =>
+      retweet.owner === auth._id ? (highlightShareIcon = true) : null
+    );
+
+    console.log("highlightShareIcon", highlightShareIcon);
+  };
+
+  highlightShareIcons();
+
+  const highlightCommentIcons = () => {};
 
   const onChange = (e) => {
     setText(e.target.value);
@@ -137,8 +187,8 @@ const TweetItem = ({ tweet }) => {
     setEdit(false);
   };
 
-  const setLike = () => {
-    let likes = tweet.likes.map((like) => like.owner === auth._Id);
+  const setLike = (id) => {
+    let likes = tweet.likes.map((like) => like._id === id);
     if (likes.length === 0 && !liked) {
       setLiked(true);
       dispatch(addLike(tweet._id));
@@ -276,7 +326,11 @@ const TweetItem = ({ tweet }) => {
                       aria-label='like'
                       className={classes.like}
                       onClick={() => setLike(tweet._id)}>
-                      {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+                      {highlightIcon && highlightLikeIcon ? (
+                        <FavoriteIcon />
+                      ) : (
+                        <FavoriteBorderIcon />
+                      )}
                     </IconButton>
                     {tweet.likes.length > 0 ? (
                       <Typography variant='button' className={classes.like}>
@@ -293,7 +347,11 @@ const TweetItem = ({ tweet }) => {
                       aria-label='retweet'
                       className={classes.retweet}
                       onClick={() => share(tweet._id)}>
-                      {retweet ? <RepeatOneIcon /> : <RepeatIcon />}
+                      {highlightIcon && highlightShareIcon ? (
+                        <ColorLensIcon />
+                      ) : (
+                        <RepeatIcon />
+                      )}
                     </IconButton>
                     {tweet.retweets.length > 0 ? (
                       <Typography variant='button' className={classes.retweet}>
