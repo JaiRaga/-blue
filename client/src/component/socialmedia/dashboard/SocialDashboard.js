@@ -11,12 +11,18 @@ const useStyles = makeStyles((theme) => ({
   container: {
     minHeight: "95vh"
   },
+  sidenav: {
+    background: "#ccc"
+  },
   post: {
     background: "#666"
     // minHeight: "100%"
   },
   posts: {
     background: "#985"
+  },
+  onlineUsers: {
+    background: "#888"
   }
 }));
 
