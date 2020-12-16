@@ -19,7 +19,7 @@ export const createPost = (text) => async (dispatch) => {
 	const body = JSON.stringify({ text });
 
 	try {
-		const res = await axios.post('/social/post', body, config);
+		const res = await axios.post('/api/social/post', body, config);
 		console.log(res);
 		dispatch({ type: CREATE_POST, payload: res.data });
 	} catch (error) {
@@ -30,8 +30,9 @@ export const createPost = (text) => async (dispatch) => {
 // Get all Posts
 export const getAllPosts = () => async (dispatch) => {
 	try {
-		const res = await axios.get('/social/posts');
-		console.log(res);
+		console.log(1);
+		const res = await axios.get('/api/social/posts');
+		console.log(2, res);
 		dispatch({ type: GET_POSTS, payload: res.data });
 	} catch (error) {
 		dispatch({ type: POST_ERROR });
@@ -41,7 +42,7 @@ export const getAllPosts = () => async (dispatch) => {
 // Get a post by id
 export const getPost = (id) => async (dispatch) => {
 	try {
-		const res = await axios.get(`/social/post/${id}`);
+		const res = await axios.get(`/api/social/post/${id}`);
 		console.log(res);
 		dispatch({ type: GET_POST, payload: res.data });
 	} catch (error) {
@@ -60,7 +61,7 @@ export const updatePost = (id, text) => async (dispatch) => {
 	const body = JSON.stringify({ text });
 
 	try {
-		const res = await axios.patch(`/social/post/${id}`);
+		const res = await axios.patch(`/api/social/post/${id}`);
 		console.log(res.data);
 		dispatch({ type: UPDATE_POST, payload: res.data });
 	} catch (err) {
@@ -71,7 +72,7 @@ export const updatePost = (id, text) => async (dispatch) => {
 // Delete Post
 export const deletePost = (id) => async (dispatch) => {
 	try {
-		await axios.delete(`/social/post/${id}`);
+		await axios.delete(`/api/social/post/${id}`);
 		dispatch({ type: DELETE_POST, payload: id });
 	} catch (err) {
 		dispatch({ type: POST_ERROR });
