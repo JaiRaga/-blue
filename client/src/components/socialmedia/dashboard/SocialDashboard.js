@@ -3,7 +3,7 @@ import { Grid, makeStyles, Hidden } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import { useSelector, useDispatch } from 'react-redux';
 import SideNav from '../layout/SideNav';
-import Posts from '../social/Posts';
+import Posts from '../post/Posts';
 import { getAllPosts } from '../../../redux/actions/social';
 
 const useStyles = makeStyles((theme) => ({
