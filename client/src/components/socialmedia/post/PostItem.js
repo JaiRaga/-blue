@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
-import { Grid, makeStyles, Paper, Avatar, IconButton } from '@material-ui/core';
+import { Grid, makeStyles, Paper, Avatar, IconButton, Backdrop } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CommentsCount from '../comments/CommentsCount';
 import img from '../../../img/raga.jpg';
+import CreatePost from './CreatePost';
 
 const useStyles = makeStyles((theme) => ({
+	backdrop: {
+		zIndex: theme.zIndex.drawer + 1,
+		color: '#fff',
+	},
 	postItems: {
 		// border: "2px solid #000",
 		margin: '22px 0',
@@ -41,9 +46,21 @@ const PostItem = ({ post }) => {
 	const [editClicked, setEditClicked] = useState(false)
 	console.log("Edit icon Clicked", editClicked, post.text)
 
+	// const [open, setOpen] = React.useState(false);
+	// const handleClose = () => {
+	// 	setOpen(false);
+	// };
+	// const handleToggle = () => {
+	// 	setOpen(!open);
+	// };
+
 
 	return (
 		<Grid item className={classes.postItems}>
+			<Backdrop className={classes.backdrop} open={editClicked} onClick={() => setEditClicked(false)}>
+				{editClicked ? <CreatePost posttext={post.text.slice(0, 15)} /> : null}
+			</Backdrop>
+
 			<Paper elevation={9}>
 				<Grid container item direction='column'>
 					<Grid item className={classes.children}>
