@@ -3,29 +3,29 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
 // Routes
-import PrivateRoute from "./component/routing/PrivateRoute";
+import PrivateRoute from "./components/routing/PrivateRoute";
 
 // Micro Blogging Components
-import Navbar from "./component/layout/Navbar";
-import Drawer from "./component/layout/Drawer";
-import Landing from "./component/layout/Landing";
-import Login from "./component/auth/Login";
-import Register from "./component/auth/Register";
-import ProfileContainer from "./component/profile/ProfileContainer";
-import Dashboard from "./component/dashboard/Dashboard";
-import Profiles from "./component/Profiles/Profiles";
-import Profile from "./component/profile/Profile";
-import Followers from "./component/Profiles/Followers";
-import Following from "./component/Profiles/Following";
-import Setting from "./component/profile/Setting";
+import Navbar from "./components/microblogging/layout/Navbar";
+import Drawer from "./components/microblogging/layout/Drawer";
+import Landing from "./components/microblogging/layout/Landing";
+import Login from "./components/microblogging/auth/Login";
+import Register from "./components/microblogging/auth/Register";
+import ProfileContainer from "./components/microblogging/profile/ProfileContainer";
+import Dashboard from "./components/microblogging/dashboard/Dashboard";
+import Profiles from "./components/microblogging/profiles/Profiles";
+import Profile from "./components/microblogging/profile/Profile";
+import Followers from "./components/microblogging/profiles/Followers";
+import Following from "./components/microblogging/profiles/Following";
+import Setting from "./components/microblogging/profile/Setting";
 
 // Social Media Components
-import SocialDashboard from "./component/socialmedia/dashboard/SocialDashboard";
+import SocialDashboard from "./components/socialmedia/dashboard/SocialDashboard";
 
 // Redux
-import store from "./Redux/store";
-import { loadUser } from "./Redux/actions/auth";
-import { getAllTweets, getTweetsByMe } from "./Redux/actions/tweet";
+import store from "./redux/store";
+import { loadUser } from "./redux/actions/auth";
+import { getAllTweets, getTweetsByMe } from "./redux/actions/tweet";
 
 // utils
 import setAuthToken from "./utils/setAuthToken";
