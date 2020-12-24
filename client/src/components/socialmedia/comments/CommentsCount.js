@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 const CommentsCount = () => {
   const classes = useStyles();
   return (
-    <Paper elevation={24}>
+    <Paper elevation={8}>
       <Grid container item className={classes.container}>
         <Button>5 Comments</Button>
       </Grid>
