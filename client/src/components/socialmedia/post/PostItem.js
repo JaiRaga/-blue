@@ -63,7 +63,7 @@ const PostItem = ({ post }) => {
 	return (
 		<Grid item className={classes.postItems}>
 			<Backdrop className={classes.backdrop} open={editClicked}>
-				{editClicked ? <CreatePost posttext={post.text.slice(0, 15)} handleEditPostClose={handleEditPostClose} /> : null}
+				{editClicked ? <CreatePost posttext={post.text.slice(0, 15)} handlePostClose={handleEditPostClose} /> : null}
 			</Backdrop>
 
 			<Paper elevation={9}>
