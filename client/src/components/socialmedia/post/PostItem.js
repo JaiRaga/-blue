@@ -44,7 +44,12 @@ const useStyles = makeStyles((theme) => ({
 const PostItem = ({ post }) => {
 	const classes = useStyles();
 	const [editClicked, setEditClicked] = useState(false)
+	// const [createPost, setCreatePost] = useState(false)
 	console.log("Edit icon Clicked", editClicked, post.text)
+
+	const handleEditPost = () => setEditClicked(prev => !prev)
+
+	const handleEditPostClose = (close) => close ? setEditClicked(false) : null
 
 	// const [open, setOpen] = React.useState(false);
 	// const handleClose = () => {
@@ -57,8 +62,8 @@ const PostItem = ({ post }) => {
 
 	return (
 		<Grid item className={classes.postItems}>
-			<Backdrop className={classes.backdrop} open={editClicked} onClick={() => setEditClicked(false)}>
-				{editClicked ? <CreatePost posttext={post.text.slice(0, 15)} /> : null}
+			<Backdrop className={classes.backdrop} open={editClicked}>
+				{editClicked ? <CreatePost posttext={post.text.slice(0, 15)} handleEditPostClose={handleEditPostClose} /> : null}
 			</Backdrop>
 
 			<Paper elevation={9}>
@@ -70,7 +75,8 @@ const PostItem = ({ post }) => {
 								Name container
 							</Grid>
 							<Grid item className={classes.flexChild}>
-								<IconButton color='primary' onClick={() => setEditClicked(prev => !prev)}>
+								{/* <IconButton color='primary' onClick={() => setEditClicked(prev => !prev) && setCreatePost(prev => !prev)}> */}
+								<IconButton color='primary' onClick={handleEditPost}>
 									<EditIcon />
 								</IconButton>
 								<IconButton color='secondary'>
