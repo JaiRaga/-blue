@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const CreatePost = ({ posttext, handleEditPostClose }) => {
+const CreatePost = ({ posttext, handlePostClose }) => {
     const classes = useStyles()
     console.log(posttext)
     return (
@@ -49,11 +49,11 @@ const CreatePost = ({ posttext, handleEditPostClose }) => {
                     autoFocus
                     multiline
                 />
-                <IconButton color="primary" className={classes.iconButton} aria-label="submit" onClick={() => handleEditPostClose(true)}>
+                <IconButton color="primary" className={classes.iconButton} aria-label="submit" onClick={() => handlePostClose(true)}>
                     <CheckIcon />
                 </IconButton>
                 <Divider className={classes.divider} orientation="vertical" />
-                <IconButton color="secondary" className={classes.iconButton} aria-label="close" onClick={() => handleEditPostClose(true)}>
+                <IconButton color="secondary" className={classes.iconButton} aria-label="close" onClick={() => handlePostClose(true)}>
                     <CloseIcon />
                 </IconButton>
             </Paper>
