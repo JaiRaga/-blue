@@ -76,6 +76,15 @@ const Navbar = () => {
           </ListItem>
         </Link>
 
+        <Link to='/dashboard/social' className={classes.link}>
+          <ListItem button>
+            <ListItemIcon className={classes.icons}>
+              <HomeIcon />
+            </ListItemIcon>
+            <ListItemText primary='Social' />
+          </ListItem>
+        </Link>
+
         <Link to='/profile' className={classes.link}>
           <ListItem button>
             <ListItemIcon className={classes.icons}>
