@@ -61,7 +61,8 @@ export const updatePost = (id, text) => async (dispatch) => {
 	const body = JSON.stringify({ text });
 
 	try {
-		const res = await axios.patch(`/api/social/post/${id}`);
+		console.log(1)
+		const res = await axios.patch(`/api/social/post/${id}`, body, config);
 		console.log(res.data);
 		dispatch({ type: UPDATE_POST, payload: res.data });
 	} catch (err) {
