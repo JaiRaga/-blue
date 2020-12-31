@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Grid, makeStyles, Paper, Avatar, IconButton, Backdrop } from '@material-ui/core';
+import { Grid, makeStyles, Paper, Avatar, IconButton, Backdrop, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteOutlineIcon from '@material-ui/icons/DeleteOutline';
 import CommentsCount from '../comments/CommentsCount';
 import img from '../../../img/raga.jpg';
 import CreatePost from './CreatePost';
+import { deletePost } from '../../../redux/actions/social';
 
 const useStyles = makeStyles((theme) => ({
 	backdrop: {
@@ -44,27 +45,49 @@ const useStyles = makeStyles((theme) => ({
 const PostItem = ({ post }) => {
 	const classes = useStyles();
 	const [editClicked, setEditClicked] = useState(false)
-	// const [createPost, setCreatePost] = useState(false)
-	console.log("Edit icon Clicked", editClicked, post.text)
+	const [deleteClicked, setDeleteClicked] = useState(false)
+	// console.log("Edit icon Clicked", editClicked, post.text)
 
+	// controls open/close of edit component
 	const handleEditPost = () => setEditClicked(prev => !prev)
 
 	const handleEditPostClose = (close) => close ? setEditClicked(false) : null
 
-	// const [open, setOpen] = React.useState(false);
-	// const handleClose = () => {
-	// 	setOpen(false);
-	// };
-	// const handleToggle = () => {
-	// 	setOpen(!open);
-	// };
+	// controls open/close of delete conformation modal
+	const handleDeleteOpen = () => setDeleteClicked(true)
+
+	const handleDeleteClose = () => setDeleteClicked(false)
 
 
 	return (
 		<Grid item className={classes.postItems}>
+			{/* Edit component */}
 			<Backdrop className={classes.backdrop} open={editClicked}>
-				{editClicked ? <CreatePost posttext={post.text.slice(0, 15)} handlePostClose={handleEditPostClose} /> : null}
+				{editClicked ? <CreatePost postId={post._id} posttext={post.text.slice(0, 15)} handlePostClose={handleEditPostClose} /> : null}
 			</Backdrop>
+
+			{/* Delete Conformation Modal */}
+			<Dialog
+				open={deleteClicked}
+				onClose={handleDeleteClose}
+				aria-labelledby="alert-dialog-title"
+				aria-describedby="alert-dialog-description"
+			>
+				<DialogTitle id="alert-dialog-title">{"Confirm Delete Request?"}</DialogTitle>
+				<DialogContent>
+					<DialogContentText id="alert-dialog-description">
+						The Post Will be Permently deleted from our database. Are you sure?
+          		</DialogContentText>
+				</DialogContent>
+				<DialogActions>
+					<Button onClick={handleDeleteClose} color="secondary">
+						Disagree
+					</Button>
+					<Button onClick={handleDeleteClose} color="primary" autoFocus onClick={() => deletePost(post._id)}>
+						Agree
+          			</Button>
+				</DialogActions>
+			</Dialog>
 
 			<Paper elevation={9}>
 				<Grid container item direction='column'>
@@ -79,7 +102,7 @@ const PostItem = ({ post }) => {
 								<IconButton color='primary' onClick={handleEditPost}>
 									<EditIcon />
 								</IconButton>
-								<IconButton color='secondary'>
+								<IconButton color='secondary' onClick={handleDeleteOpen}>
 									<DeleteOutlineIcon />
 								</IconButton>
 							</Grid>
