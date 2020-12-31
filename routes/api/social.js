@@ -23,7 +23,15 @@ router.post('/social/post', auth, async (req, res) => {
 router.get('/social/posts', auth, async (req, res) => {
 	try {
 		const posts = await Social.find();
-		res.send(posts);
+
+		Promise.all(posts.map(async post => {
+			await post.populate('owner').execPopulate()
+			await post.save()
+			return post
+		}))
+			.then((result) => res.send(result))
+			.catch((err) => console.log(err));
+		// res.send(posts);
 	} catch (err) {
 		console.log(err.messsage);
 		res.status(500).send(err.message);
@@ -60,6 +68,7 @@ router.patch('/social/post/:id', auth, async (req, res) => {
 
 	try {
 		const post = await Social.findOne({ _id, owner: req.user._id });
+		// const post = await Social.findOne({ _id });
 
 		if (!post) return res.status(404).send('No Post Found!');
 
